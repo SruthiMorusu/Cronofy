@@ -80,14 +80,14 @@ Return a JSON list of events from the synched calender.
 
 
 --
-### POST Message
+### POST Event
 ---
 
-Should accept a “message_text” parameter that creates a Message object and stores the value.
+Should accept a “calender Id” parameter and "event id " parameter that creates a event object and stores in the calender
 
 * **URL**
 
-`/messages/`
+`/{calender-Id}/events`
 
 * **Method:**
 
@@ -97,7 +97,7 @@ Should accept a “message_text” parameter that creates a Message object and s
 
 **Required:**
 
-  `*None*`
+  `calender id`
 
 **Optional:**
 
@@ -110,7 +110,17 @@ Should accept a “message_text” parameter that creates a Message object and s
 * **JSON Object:**
 
 ```bash
-{ “message_text”: “hello world” }
+{ {
+    "event_id":"E1234567890",
+    "summary":"Created with Cronofy",
+    "description":"You can put notes in here",
+    "start":"2016-03-15T15:30:00Z",
+    "end":"2016-03-15T16:00:00Z",
+    "tzid":"Etc/UTC",
+    "location":{
+        "description":"Board Room"
+    }
+}
 ```
 
 * **Success Response:**
@@ -124,7 +134,7 @@ Should accept a “message_text” parameter that creates a Message object and s
   ``` 
 
 ---
-### DELETE Message
+### DELETE Event
 ---
 
 Delete the message with the given id
@@ -159,4 +169,60 @@ Delete the message with the given id
 
 * **Success Response:**
 
+* **Code:** 200 <br />
+---
+### GET Free/Busy Event
+---
+
+Delete the message with the given id
+
+* **URL**
+
+`/free_busy/tzid`
+
+* **Method:**
+
+`GET`
+
+*  **URL Params**
+
+**Required:**
+
+ `*id*`
+ 
+**Optional:**
+
+  `*None*`
+
+* **Data Params**
+
+**Required:**
+
+  `tzid`
+
+**Optional:**
+
+  `*None*`
+
+* **Success Response:**
+
+   `{
+    "pages": {
+        "current": 1,
+        "total": 1
+    },
+    "free_busy": [
+        {
+            "calendar_id": "cal_WfHs-c1iVgP3AAKx_RKyPAEDs8zSkRLgWYheKWw",
+            "start": "2017-09-26",
+            "end": "2017-09-27",
+            "free_busy_status": "free"
+        },
+        {
+            "calendar_id": "cal_WfHs-c1iVgP3AAKx_RKyPAEDs8zSkRLgWYheKWw",
+            "start": "2017-09-26T03:30:00Z",
+            "end": "2017-09-26T04:30:00Z",
+            "free_busy_status": "busy"
+        }]`
+   
 * **Code:** 200 <br />
